@@ -1,17 +1,32 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import Route from './components/Route.vue';
+import { ref } from 'vue';
+
+const inputRef = ref('')
+const data = ref({});
+
+
+const submit = () => {
+  const socket = new WebSocket('ws://localhost:8080');
+  socket.addEventListener('open', () => {
+    socket.send('baidu.com');
+  });
+}
+
+// socket.addEventListener('message', (event) => {
+//   // 接受服务器发送数据
+//  console.log('Message from server: ', event.data);
+// });
+
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+    <div>
+      <Input v-model="inputRef" />
+      <Button type="primary" @click="submit()">查询</Button>
+    </div>
+      <Route :render="data" />
 </template>
 
 <style scoped>

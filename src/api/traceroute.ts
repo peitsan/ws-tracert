@@ -1,6 +1,21 @@
+import ws from 'ws';
 import Traceroute from '../tsnode/index';
 
-try {
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on('connection', (ws) => {
+    ws.on('message', (host) => {
+    console.log('Host(Domain/IP): %s', host);
+    traceroute(host);
+    });
+   
+    ws.send('something');
+   });
+
+
+
+function traceroute(host: string) {
+    try {
     const tracer = new Traceroute();
     tracer
         .on('pid', (pid) => {
@@ -16,7 +31,8 @@ try {
             console.log(`close: code ${code}`);
         });
 
-    tracer.trace('github.com');
+    tracer.trace(host);
 } catch (ex) {
     console.log(ex);
+}
 }

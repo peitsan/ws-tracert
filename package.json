@@ -2,18 +2,20 @@
   "name": "ws-tracert",
   "private": true,
   "version": "0.0.0",
-
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "example": "ts-node src/api/index.ts"
+    "server": "ts-node src/api/traceroute.ts",
+    "test": "ts-node src/api/test.ts"
   },
   "dependencies": {
+    "ant-design-vue": "^4.0.7",
     "ts-node": "10.9.1",
     "typescript": "4.8.4",
     "validator": "^13.7.0",
-    "vue": "^3.3.8"
+    "vue": "^3.3.8",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "@types/jest": "^29.2.3",

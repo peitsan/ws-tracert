@@ -28,7 +28,13 @@
 
     /* Type Checking */
     "strict": true,   
-    "skipLibCheck": true,                                 /* Skip type checking of declaration files. */
+    "skipLibCheck": true,     
+    
+    /* Experimental */
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": [
