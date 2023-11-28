@@ -70,22 +70,22 @@ const columns = [
 
 <template>
     <div>
-      <Input  style="width: 240px;height: 40px;" placeholder="请输入主机域名或者IP" v-model:value="inputRef" autofocus @change="(e: any) => {inputRef = e.target.value; console.log(e.target.value)}"/>
-      <Button type="primary" @click="submit()">查询</Button>
+      <a-input  style="width: 240px;height: 40px;" placeholder="请输入主机域名或者IP" v-model:value="inputRef" autofocus @change="(e: any) => {inputRef = e.target.value; console.log(e.target.value)}"/>
+      <a-button type="primary" @click="submit()">查询</a-button>
     </div>
-    <Spin :spinning="spin" tip="Tracerting...">
-      <Alert
+    <a-spin :spinning="spin" tip="Tracerting...">
+      <a-alert
         message="提示："
         :description="`服务器正在对主机${inputRef}进行Tracert操作，请稍后...}`"
-      ></Alert>
-    </Spin>
+      ></a-alert>
+    </a-spin>
     <div>
-      <Table :columns="columns" :dataSource="data[0] ? data[0].hop: []" bordered>
+      <a-table :columns="columns" :dataSource="data[0] ? data[0].hop: []" bordered>
           <template #bodyCell="{ record }">
             <span v-if="record.rtt1 === '*'">No response</span>
             <span v-else>{{ record.rtt1 }}</span>
           </template>
-  </Table>
+  </a-table>
     </div>
       <!-- <Route :render="data" /> -->
 </template>
