@@ -1,18 +1,6 @@
-import ws from 'ws';
 import Traceroute from '../tsnode/index';
 
-const wss = new WebSocket.Server({ port: 8080 });
-
-wss.on('connection', (ws) => {
-    ws.on('message', (host) => {
-    console.log('Host(Domain/IP): %s', host);
-    traceroute(host);
-    });
-   
-    ws.send('something');
-   });
-
-
+const args = process.argv.slice(2); // 获取命令行参数
 
 function traceroute(host: string) {
     try {
@@ -36,3 +24,6 @@ function traceroute(host: string) {
     console.log(ex);
 }
 }
+
+//执行tracert命令
+traceroute(args[0]);

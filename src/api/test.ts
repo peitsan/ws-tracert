@@ -1,6 +1,8 @@
 import Traceroute from '../tsnode/index';
 
 export function test() {
+    const args = process.argv.slice(2);
+    console.log("路径:" ,args[0]);
 try {
     const tracer = new Traceroute();
     tracer
@@ -17,7 +19,7 @@ try {
             console.log(`结束/close: code ${code}`);
         });
 
-    tracer.trace('github.com');
+    tracer.trace(args[0]);
 } catch (ex) {
     console.log(ex);
 }

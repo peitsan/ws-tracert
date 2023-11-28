@@ -1,16 +1,25 @@
 <script setup lang="ts">
 import Route from './components/Route.vue';
-import { ref } from 'vue';
+
+import { ref ,onMounted} from 'vue';
 
 const inputRef = ref('')
 const data = ref({});
+const socket = new WebSocket('ws://localhost:8080');
 
-
-const submit = () => {
-  const socket = new WebSocket('ws://localhost:8080');
+onMounted(() => {
   socket.addEventListener('open', () => {
     socket.send('baidu.com');
   });
+  socket.addEventListener('message', (event) => {
+    // 接受服务器发送数据
+    console.log('Message from server: ', event.data);
+    data.value = event.data
+  });
+})
+
+const submit = () => {
+  socket.send('github.com');
 }
 
 // socket.addEventListener('message', (event) => {

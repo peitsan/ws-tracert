@@ -2,7 +2,7 @@
 
    - ws需要实现实时的双向通信，状态一直保持，需要开两个服务
    
-   - 查询Tracent, 通过 exec()运行命令行脚本， 参数 --host host/IP
+   - 查询Tracent, 通过 exec()运行命令行脚本， 参数 --host host/IP (process.argv)
    
    - pnpm server后  启动vite：5173 前端页面 启动 ws：8080服务器 挂起监听
 
