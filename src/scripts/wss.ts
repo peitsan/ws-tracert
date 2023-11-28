@@ -1,7 +1,7 @@
 import { exec } from 'child_process';
-import * as ws from 'ws';
+import WebSocket from 'ws';
 
-export function wsserver(wss: ws.Server) {
+export function wsserver(wss: WebSocket.Server) {
  
     console.log("服务器启动成功")
 
@@ -20,7 +20,7 @@ export function wsserver(wss: ws.Server) {
               console.log(`stdout: ${stdout}`);
               console.error(`stderr: ${stderr}`);
               // 将输出发送到客户端
-       wss.clients.forEach((client) => {
+       wss.clients.forEach((client : any) => {
             if (client !== ws && client.readyState === WebSocket.OPEN) {
               client.send(message);
               client.send(stdout);

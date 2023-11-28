@@ -3,6 +3,7 @@
 
 import { ref ,onMounted} from 'vue';
 import  { parseTraceOutput } from './scripts/processWssRecv';
+import  { message  } from 'ant-design-vue';
 
 const inputRef = ref('')
 const data = ref<any[]>([]); //存放ws返回数据
@@ -19,7 +20,10 @@ onMounted(() => {
       // 处理从服务器收到的消息
       // ts-ignore
       data.value.push(parseTraceOutput(event.data as string)); //处理返回为JSON格式
-      console.log(data.value);
+      if(data.value.length == 0) {
+        console.log(`${inputRef.value}是本机地址(localhost)！`)
+        message.warning(`${inputRef.value}是本机地址(localhost)！`);
+      }
       spin.value = false;  //关闭spin 
       
       if (event.data.error) {
@@ -27,10 +31,6 @@ onMounted(() => {
       } else {
         // 在这里处理从服务器收到的 stdout 数据
         console.log(`stdout: ${event.data.stdout}`);
-        // 你可以将 stdout 数据插入到页面中，例如使用 DOM 操作或其他前端框架
-        // 例如，使用一个 div 元素显示 stdout 内容：
-        // const outputDiv = document.getElementById('output') as HTMLElement ;
-        
       }
     });
 })
@@ -75,8 +75,8 @@ const columns = [
     </div>
     <a-spin :spinning="spin" tip="Tracerting...">
       <a-alert
-        message="提示："
-        :description="`服务器正在对主机${inputRef}进行Tracert操作，请稍后...}`"
+        message="阁下请稍后..."
+        :description="`服务器正在对主机${inputRef}进行Tracert操作`"
       ></a-alert>
     </a-spin>
     <div>
