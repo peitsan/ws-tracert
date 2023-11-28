@@ -19,7 +19,7 @@ export function wsserver(wss: ws.Server) {
               console.error(`stderr: ${stderr}`);
         
               // 将输出发送到客户端
-        wss.clients.forEach((client) => {
+       wss.clients.forEach((client) => {
             if (client !== ws && client.readyState === WebSocket.OPEN) {
               client.send(message);
               client.send(stdout);

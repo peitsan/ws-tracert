@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Route from './components/Route.vue';
+// import Route from './components/Route.vue';
 
 import { ref ,onMounted} from 'vue';
 
@@ -8,8 +8,9 @@ const data = ref({});
 const socket = new WebSocket('ws://localhost:8080');
 
 onMounted(() => {
+  console.log("Server is ready:")
   socket.addEventListener('open', () => {
-    socket.send('baidu.com');
+    console.log('Request to server');
   });
   socket.addEventListener('message', (event) => {
     // 接受服务器发送数据
@@ -19,23 +20,17 @@ onMounted(() => {
 })
 
 const submit = () => {
-  socket.send('github.com');
+  socket.send(inputRef.value);
 }
-
-// socket.addEventListener('message', (event) => {
-//   // 接受服务器发送数据
-//  console.log('Message from server: ', event.data);
-// });
-
 
 </script>
 
 <template>
     <div>
-      <Input v-model="inputRef" />
+      <Input  style="width: 240px;height: 40px;" placeholder="请输入主机域名或者IP" v-model:value="inputRef" autofocus @change="(e: any) => {inputRef = e.target.value; console.log(e.target.value)}"/>
       <Button type="primary" @click="submit()">查询</Button>
     </div>
-      <Route :render="data" />
+      <!-- <Route :render="data" /> -->
 </template>
 
 <style scoped>

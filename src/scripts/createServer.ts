@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { wsserver } from "./wss";
-import { green, cyan, yellow} from "chalk";
+import { green, cyan, yellow } from "chalk";
 import ws from 'ws';
 import path from "path";
 import { staticPath } from "../../index";
@@ -17,8 +17,8 @@ app.use(express.static(root));
   });
 
 app.listen(2023, () => {
-    console.log(yellow('Server started successfully on port 2023'));
-    console.log(green("服务器启动成功:"), cyan("http://localhost:2023"));
+  process.stdout.write(yellow('Server started successfully on port 2023~ \n'));
+  process.stdout.write(`${green("服务器启动成功:")}${cyan("http://localhost:2023")}\n`);
   })
 
 const wss = new ws.Server({ port: 8080 });

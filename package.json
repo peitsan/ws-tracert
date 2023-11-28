@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "ts-node src/scripts/createServer.ts",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "server": "ts-node src/scripts/createServer.ts",
+    "server": "node src/scripts/server.mjs",
     "test": "ts-node src/api/test.ts"
   },
   "dependencies": {

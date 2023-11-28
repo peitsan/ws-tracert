@@ -7,9 +7,10 @@ const TraceRT = ref([1,2])
 </script>
 
 <template>
-  <div class="read-the-docs" v-if="(item,index) in TraceRT">
+      <div>{{TraceRT}}</div>
+  <!-- <div class="read-the-docs" v-if="(item,index) in TraceRT">
     <div>{{item}}</div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>
