@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import Route from './components/Route.vue';
 
 import { ref ,onMounted} from 'vue';
 import  { parseTraceOutput } from './scripts/processWssRecv';
@@ -19,11 +18,16 @@ onMounted(() => {
       console.log(`Received message => ${event.data}`);
       // 处理从服务器收到的消息
       // ts-ignore
-      data.value.push(parseTraceOutput(event.data as string)); //处理返回为JSON格式
-      if(data.value.length == 0) {
+      let tmp = parseTraceOutput(event.data as string); //处理返回为JSON格式
+      if(tmp.code == 1 || tmp.hop.length == 0) {
         console.log(`${inputRef.value}是本机地址(localhost)！`)
         message.warning(`${inputRef.value}是本机地址(localhost)！`);
       }
+      else if(tmp.code == -1){
+        console.log(`${inputRef.value}不是合法域名或者IP！`)
+        message.warning(`${inputRef.value}不是合法域名或者IP！`);
+      }
+      else data.value.push(tmp);
       spin.value = false;  //关闭spin 
       
       if (event.data.error) {
@@ -81,13 +85,12 @@ const columns = [
     </a-spin>
     <div>
       <a-table :columns="columns" :dataSource="data[0] ? data[0].hop: []" bordered>
-          <template #bodyCell="{ record }">
-            <span v-if="record.rtt1 === '*'">No response</span>
-            <span v-else>{{ record.rtt1 }}</span>
+          <template #bodyCell="{ column, record }">
+              <span v-if="record[column.key] === '*'">No response</span>
+              <span >{{ record[column.key] }}</span>
           </template>
   </a-table>
     </div>
-      <!-- <Route :render="data" /> -->
 </template>
 
 <style scoped>

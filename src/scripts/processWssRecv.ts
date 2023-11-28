@@ -13,6 +13,10 @@ interface HopData {
   }
   
   export function parseTraceOutput(output: string): TracerouteResult {
+    if(output == "It's a local host")
+      return { pid: 0, hop: [] , code: 1};  //返回本机域名状态码
+    else if(output == "Invalid domain name or IP address")
+      return { pid: 0, hop: [] , code: -1};    //返回非法域名状态码
     const lines = output.trim().split('\n');
     const result: TracerouteResult = { pid: 0, hop: [] , code: 0};
   

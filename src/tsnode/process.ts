@@ -18,7 +18,9 @@ export abstract class Process extends events.EventEmitter {
     }
 
     public trace(domainName: string): void {
-        if (!this.isValidDomainName(domainName)) {
+        if (domainName == "localhost" || domainName =="127.0.0.1") //本机地址
+            throw "It's a local host"
+        else if (!this.isValidDomainName(domainName)) {  //非法地址
             throw "Invalid domain name or IP address";
         }
 
