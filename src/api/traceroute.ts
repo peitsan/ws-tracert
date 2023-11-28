@@ -1,4 +1,5 @@
 import Traceroute from '../tsnode/index';
+// import ws from 'ws';
 
 const args = process.argv.slice(2); // 获取命令行参数
 
