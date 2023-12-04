@@ -10,7 +10,7 @@ export function wsserver(wss: WebSocket.Server) {
         console.log(`Received message => ${message}`);
         // 运行traceroute命令
         const host = message; // 获取host参数
-        exec('ts-node src/api/traceroute ' + hos~t, function(err, stdout, stderr) {
+        exec('ts-node src/api/traceroute ' + host, function(err, stdout, stderr) {
           console.log(`stdout: ${stdout}`);
           if (err) {
             console.log(err);
