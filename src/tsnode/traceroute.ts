@@ -4,6 +4,8 @@ import { Hop, Process } from './process';
 
 // Traceroute 类继承自 Process 类
 export class Traceroute extends Process {
+    //标志位，用于检测连续的星号（*）表示的数据
+    private consecutiveUndefinedCount: number = 0;
     // 构造函数，接受 IP 版本和发送等待时间作为参数
     constructor(ipVersion = '', sendwait = 0) {
         // 设置 traceroute 命令的参数
@@ -42,6 +44,11 @@ export class Traceroute extends Process {
 
         let result: Hop | null = null;
         // 如果匹配成功，提取每一跳的信息
+        if (this.consecutiveUndefinedCount === 3) {
+            console.log('Detected consecutive undefined. Exiting trace.');
+            return result;
+            // 可以在这里添加跳出循环的逻辑
+        }
         if (parsedData !== null) {
             // 根据匹配的组数确定是否为星号（*）表示的数据
             if (parsedData[4] === undefined) {
@@ -50,6 +57,7 @@ export class Traceroute extends Process {
                     ip: parsedData[2],
                     rtt1: parsedData[3]
                 };
+                this.consecutiveUndefinedCount++;
             }
             else {
                 result = {
@@ -57,9 +65,11 @@ export class Traceroute extends Process {
                     ip: parsedData[4],
                     rtt1: parsedData[4]
                 };
+                // 计数标志位，用于检测连续的星号（*）表示的数据
+                this.consecutiveUndefinedCount = 0;
             }
         }
-
+      
         return result;
     }
 }

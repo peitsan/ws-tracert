@@ -27,6 +27,10 @@ onMounted(() => {
         console.log(`${inputRef.value}不是合法域名或者IP！`)
         message.warning(`${inputRef.value}不是合法域名或者IP！`);
       }
+      else if(tmp.code == 500){
+        console.log(`${inputRef.value}持续超时,提前结束！`)
+        message.warning(`${inputRef.value}持续超时,提前结束！`);
+      }
       else data.value.push(tmp);
       spin.value = false;  //关闭spin 
       
@@ -42,6 +46,7 @@ onMounted(() => {
 const submit = () => {
   spin.value = true;
   socket.send(inputRef.value);
+  data.value = [];
 }
 const columns = [
         {
@@ -79,8 +84,14 @@ const columns = [
     </div>
     <a-spin :spinning="spin" tip="Tracerting...">
       <a-alert
+        v-if="spin"
         message="阁下请稍后..."
         :description="`服务器正在对主机${inputRef}进行Tracert操作`"
+      ></a-alert>
+      <a-alert
+        v-if="!spin"
+        message="请输入主机域名或者IP"
+        :description="`支持公网、私网，支持IPV4、IPV6，支持域名解析~`"
       ></a-alert>
     </a-spin>
     <div>

@@ -5,7 +5,6 @@ import { green, cyan, yellow } from "chalk";
 import ws from 'ws';
 import path from "path";
 import { staticPath } from "../../index";
-// import http from 'http';
 
 const app = express();
 const root = path.join(staticPath, "ws-tracert/dist");
@@ -26,8 +25,3 @@ const wss = new ws.Server({ port: 8080 });
 
 wsserver(wss);
 
-// const server = http.createServer(app);
-
-// app.listen(8080, () => {
-//   console.log('Server listening on http://localhost:8080');
-// });

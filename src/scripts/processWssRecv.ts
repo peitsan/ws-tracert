@@ -13,6 +13,7 @@ interface HopData {
   }
   
   export function parseTraceOutput(output: string): TracerouteResult {
+    //output 从ws拿到的一对字符串
     if(output == "It's a local host")
       return { pid: 0, hop: [] , code: 1};  //返回本机域名状态码
     else if(output == "Invalid domain name or IP address")
@@ -21,6 +22,7 @@ interface HopData {
     const result: TracerouteResult = { pid: 0, hop: [] , code: 0};
   
     for (const line of lines) {
+      //通过正则提取console.log输出的数据
       const matchPid = line.match(/^pid: (\d+)/);
       if (matchPid) {
         result.pid = parseInt(matchPid[1], 10);
